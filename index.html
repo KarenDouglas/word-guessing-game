@@ -3,10 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/css/styles.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <title>Guess The Word</title>
 </head>
 <body>
-    <script src="./assets/js/script.js"></script>
+    <main id="main-container" class="row">
+        
+        <!-- RULES CONTAINER ID: rules-container -->
+        <section id="rules-container" class="rules-container col s12">
+            <details>
+                <summary>Rules</summary>
+                - id: "rules-container"
+            </details>
+        </section>
+        <header class="header-container">
+            <h1>Guess The Word</h1>        
+        </header>
+         <!-- HIGH SCORES CONTAINER ID: highscores-container -->
+            <section id="high-scores-container" class="high-scores-container col s12">
+                <details>
+                    <summary>High Scores</summary>
+                    - id:"high-scores-container"
+                </details>
+            </section>
+             <!-- GAME BOARD CONTAINER ID: game-board-container -->
+            <section id="game-container" class="game-container col s12">
+                <div id="game-board-container" class="game-board-container">
+                    <p>id: "game-board-container"</p>
+                </div>
+                    <!-- GUESSED BOX CONTAINER ID: guessed-box-container -->
+                <div id="guessed-box-container" class='guessed-box-container'>
+                    <p>id: "guessed-box-container"</p>
+                </div>
+            </section>
+            <div id="hint-score-container" class="hint-score-container col s12">
+                <div class="row">
+                    <!-- HINT CONTAINER ID: hint-container -->
+                    <section id="hint-container" class="hint-container col  s12">
+                        <details>
+                            <summary>Hint</summary>
+                           - id: 'hint-container'
+                        </details>
+                    </section>
+                     <!-- SCORE CONTAINER ID: score-container -->
+                    <section id="score-container" class="score-container col  s12">
+                        <p>id:"score-container"</p>
+                    </section>      
+                </div>
+            </div>
+    </main>
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 </html>
