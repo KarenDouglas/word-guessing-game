@@ -68,3 +68,34 @@ document.addEventListener("keyup", function (event) {
 })
 
 getWord();
+
+function getWordSynonym(word) {
+    const apiKey = 'apikey';
+    const apiUrl = `https://api.example.com/synonym?word=${word}&apiKey=${apiKey}`;
+
+    return fetch(apiUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            return data.getWordSynonym;
+        })
+        .catch(error => {
+            console.error(`Failed to fetch: ${error.message}`);
+            return 'synonym not available';// for exmpale in console 
+        });
+}
+function showMessage(message) {
+    console.log(message);
+}
+function Hint() {
+    const currentWord = 'example';
+    getWordSynonym(currentWord)
+        .then(wordSynonym => {
+            showMessage(`synonym of ${currentWord}: ${wordSynonym}`);
+        });
+}
+Hint();
