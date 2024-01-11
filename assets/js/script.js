@@ -1,0 +1,50 @@
+const gameCont = document.getElementById("#game-container");
+const letters = Array.from("qwertyuiopasdfghjklzxcvbnm");
+let wordArray = [];
+let gameWord = "";
+console.log(letters);
+console.log(gameWord);
+
+// function to get a random word from the api
+function getWord() {
+    return fetch(`https://random-word-api.vercel.app/api?words=1&length=7`)
+    .then(function(response){
+        return response.json();
+    })
+    .then(function(data) {
+        gameWord = data[0];
+        makeGame(gameWord);
+        wordArray = Array.from(gameWord);
+        console.log(gameWord);
+        console.log(wordArray);
+    })
+}
+
+// function to make the game board of blank spaces
+// use template literal to insert html of blanks
+// each blank has its own id? for targetting purposes?
+function makeGame(word) {
+    let gameBoard = `<p>_ _ _ _ _ _ _</p>`; // need to figure out how to format this better
+
+    
+
+}
+
+//function to compare the letter guessed versus the game word
+// make conditional statement: if gameword contains letterguessed, add it to gameboard
+// if gameword does not contain letterguessed, remove points
+// if word is finished or out of points, run gameOver
+// function checkLetter() {
+
+//     for (i = 0; i < wordArray.length; i++)  {
+//        if ( wordArray 
+
+//        ) else (
+//         //deduct points
+//         //add wrong letter to guessed letters box
+//        )
+// }
+// }
+
+getWord();
+// document.addEventListener("keyup", checkLetter());
