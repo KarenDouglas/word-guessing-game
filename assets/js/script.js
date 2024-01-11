@@ -1,7 +1,9 @@
-const gameCont = document.getElementById("#game-container");
+const gameCont = document.getElementById("#game-board-container");
 const letters = Array.from("qwertyuiopasdfghjklzxcvbnm");
+let guessedCont = document.getElementById("#guessed-box-container");
 let wordArray = [];
 let gameWord = "";
+let userScore = 70;
 console.log(letters);
 console.log(gameWord);
 
@@ -38,7 +40,6 @@ function makeGame(word) {
 
 //function to compare the letter guessed versus the game word
 // make conditional statement: if gameword contains letterguessed, add it to gameboard
-// if gameword does not contain letterguessed, remove points
 // if word is finished or out of points, run gameOver
 document.addEventListener("keyup", function (event) {
     let guess = event.key; // assigns the typed key to a variable
@@ -48,8 +49,16 @@ document.addEventListener("keyup", function (event) {
         for (i = 0; i < wordArray.length; i++) {
             if (correctGuess) {
                 console.log(correctGuess);
+                // populate the blanks
+
             } else {
                 console.log("wrong");
+                //populate the guessed letters box
+                // wrongBox.append(event.key);
+                //deduct points
+                userScore = userScore += -10;
+                if (userScore == 0) gameOver();
+                console.log(userScore);
                 return;
             }
         }
