@@ -61,33 +61,53 @@ document.addEventListener("keyup", function (event) {
 
 getWord();
 
-function getWordSynonym(word) {
-    const apiKey = 'apikey';
-    const apiUrl = `https://api.example.com/synonym?word=${word}&apiKey=${apiKey}`;
-
-    return fetch(apiUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            return data.getWordSynonym;
-        })
-        .catch(error => {
-            console.error(`Failed to fetch: ${error.message}`);
-            return 'synonym not available';// for exmpale in console 
-        });
-}
-function showMessage(message) {
-    console.log(message);
-}
-function Hint() {
+document.addEventListener('DOMContentLoaded', function () {
+    const hintContainer = document.getElementById('hint-container');
     const currentWord = 'example';
-    getWordSynonym(currentWord)
-        .then(wordSynonym => {
-            showMessage(`synonym of ${currentWord}: ${wordSynonym}`);
+
+    function getWordSynonym(word) {
+        const apiKey = 'apikey';
+        const apiUrl = `https://api.example.com/synonym?word=${word}&apiKey=${apiKey}`;
+
+        return fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                return data.getWordSynonym;
+            })
+            .catch(error => {
+                console.error(`Failed to fetch: ${error.message}`);
+                return 'synonym not available';// example for console 
+            });
+    }
+    function showMessage(message) {
+        hintContainer.innerHTML = message;
+    }
+    function Hint() {
+        hintContainer.addEventListener('click', function () {
+            getWordSynonym(currentWord)
+                .then(wordSynonym => {
+                    showMessage(`Synonym of ${currentWord}: ${wordSynonym}`);
+                });
         });
-}
-Hint();
+    }
+    Hint();
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const rulesContainer = document.getElementById('rules-container');
+    const rulesContent = document.getElementById('rulesContent');
+
+    if (rulesContainer && rulesContent) {
+        let isOpen = false;
+
+        rulesContainer.addEventListener('click', function () {
+            isOpen = !isOpen;
+            rulesContent.style.display = isOpen ? 'block' : 'none';
+        });
+    }
+});
