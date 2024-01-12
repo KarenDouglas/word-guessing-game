@@ -1,11 +1,9 @@
-const gameCont = document.getElementById("#game-board-container");
-const letters = Array.from("qwertyuiopasdfghjklzxcvbnm");
-let guessedCont = document.getElementById("#guessed-box-container");
+const letters = Array.from("qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM");
+const gameCont = document.getElementById("game-board-container");
+const guessedCont = document.getElementById("guessed-box-container");
 let wordArray = [];
 let gameWord = "";
 let userScore = 70;
-console.log(letters);
-console.log(gameWord);
 
 // function to get a random word from the api
 function getWord() {
@@ -15,8 +13,8 @@ function getWord() {
         })
         .then(function (data) {
             gameWord = data[0];
-            makeGame(wordArray);
             wordArray = Array.from(gameWord);
+            makeGame(wordArray);
             console.log(gameWord);
             console.log(wordArray);
         })
@@ -25,17 +23,14 @@ function getWord() {
 // function to make the game board of blank spaces
 // use template literal to insert html of blanks
 // each blank has its own id? for targetting purposes?
-function makeGame(word) {
-    for (i = 0; i < word.length; i++) {
-        // make variable of string of underscores
-        // insert as <p> tag, append to page in gameCont
-        word[i].add
-
+function makeGame(array) {
+    for (i = 0; i < array.length; i++) {
+        let gameBlank = document.createElement("span");
+        gameBlank.textContent = "_ ";
+        gameBlank.setAttribute("data-letter", array[i]);
+        gameCont.appendChild(gameBlank);
+        console.log(gameBlank);
     }
-    let gameBoard = `<p>_ _ _ _ _ _ _</p>`; // need to figure out how to format this better
-
-
-
 }
 
 //function to compare the letter guessed versus the game word
@@ -45,22 +40,19 @@ document.addEventListener("keyup", function (event) {
     let guess = event.key; // assigns the typed key to a variable
     let correctGuess = wordArray.includes(guess); // checks if wordArray contains the letter, returns boolean
     if (letters.includes(guess)) {
-        console.log(event.key);
-        for (i = 0; i < wordArray.length; i++) {
-            if (correctGuess) {
-                console.log(correctGuess);
+        let correctSpot = document.querySelectorAll(`[data-letter=${guess}]`);
+        for (i = 0; i < correctSpot.length; i++) {
                 // populate the blanks
-
-            } else {
-                console.log("wrong");
-                //populate the guessed letters box
-                // wrongBox.append(event.key);
-                //deduct points
-                userScore = userScore += -10;
-                if (userScore == 0) gameOver();
-                console.log(userScore);
-                return;
-            }
+                correctSpot[i].textContent = guess;
+        }
+        if (!correctGuess) {
+            //populate the guessed letters box
+            //deduct points
+            let wrongGuesses = `<span>${guess} </span>`;
+            guessedCont.innerHTML += wrongGuesses;
+            userScore = userScore -= 10;
+            if (userScore == 0) gameOver();
+            return;
         }
     } else {
         return;
