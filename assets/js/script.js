@@ -63,12 +63,12 @@ getWord();
 
 document.addEventListener('DOMContentLoaded', function () {
     const hintContainer = document.getElementById('hint-container');
-    const currentWord = 'example';
+    const gameWord = '';
 
     function getWordSynonym(word) {
         const apiKey = 'apikey';
         const apiUrl = `https://api.example.com/synonym?word=${word}&apiKey=${apiKey}`;
-
+       
         return fetch(apiUrl)
             .then(response => {
                 if (!response.ok) {
@@ -89,9 +89,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     function Hint() {
         hintContainer.addEventListener('click', function () {
-            getWordSynonym(currentWord)
+            getWordSynonym(gameWord)
                 .then(wordSynonym => {
-                    showMessage(`Synonym of ${currentWord}: ${wordSynonym}`);
+                    showMessage(`Synonym of ${gameWord}: ${wordSynonym}`);
                 });
         });
     }
@@ -100,14 +100,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.addEventListener('DOMContentLoaded', function () {
     const rulesContainer = document.getElementById('rules-container');
-    const rulesContent = document.getElementById('rulesContent');
+    const rulesContent = document.getElementById('rules-content');
 
     if (rulesContainer && rulesContent) {
         let isOpen = false;
 
+        rulesContent.style.display = 'none';
+
         rulesContainer.addEventListener('click', function () {
+            console.log('Clicked');
             isOpen = !isOpen;
             rulesContent.style.display = isOpen ? 'block' : 'none';
         });
+
+        const rulesSummary = document.querySelector('#rules-container summary');
+        if (rulesSummary) {
+            rulesSummary.innerHTML = 'Rules';
+        }
     }
 });
