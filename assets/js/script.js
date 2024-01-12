@@ -1,8 +1,8 @@
-const gameCont = document.getElementById("#game-board-container");
-const $highScoresContainer =document.querySelector('#high-scores-container')
+const gameCont = document.getElementById("game-board-container");
+const $highScoresContainer =document.querySelector('high-scores-container')
 const letters = Array.from("qwertyuiopasdfghjklzxcvbnm");
 const highscores = JSON.parse(localStorage.getItem('highScores')) || []
-let guessedCont = document.getElementById("#guessed-box-container");
+let guessedCont = document.getElementById("guessed-box-container");
 let wordArray = [];
 let gameWord = "";
 let userScore = 70;
@@ -19,7 +19,6 @@ function getWord() {
             wordArray = Array.from(gameWord);
             makeGame(wordArray);
             console.log(gameWord);
-            console.log(wordArray);
         })
 }
 
@@ -32,7 +31,6 @@ function makeGame(array) {
         gameBlank.textContent = "_ ";
         gameBlank.setAttribute("data-letter", array[i]);
         gameCont.appendChild(gameBlank);
-        console.log(gameBlank);
     }
 }
 
