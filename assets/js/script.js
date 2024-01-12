@@ -99,3 +99,17 @@ function Hint() {
         });
 }
 Hint();
+
+document.addEventListener('DOMContentLoaded', function () {
+    const rulesButton = document.getElementById('rulesButton');
+    const rulesContent = document.getElementById('rulesContent');
+
+    let isOpen = false;
+
+    rulesButton.addEventListener('click', function () {
+        isOpen = !isOpen;
+        rulesContent.style.display = isOpen ? 'block' : 'none';
+        if (isOpen) {
+        }
+    });
+})
