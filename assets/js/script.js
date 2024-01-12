@@ -111,7 +111,7 @@ function addToHighScores (name,score){
     }  
         
     highscores.push(scoreObj)
-    const sortedHighScores = highscores.sort((a, b) => b.userScore -a.userScore );
+    const sortedHighScores = highscores.sort((a, b) => b.userScore - a.userScore );
     localStorage.setItem('highScores', JSON.stringify(sortedHighScores))
     renderHighScores(highscores)
 }
