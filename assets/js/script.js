@@ -1,9 +1,10 @@
 const letters = Array.from("qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM");
 const gameCont = document.getElementById("game-board-container");
-const guessedCont = document.getElementById("guessed-box-container");
+const guessCont = document.getElementById("guessed-box-container");
 let wordArray = [];
 let gameWord = "";
 let userScore = 70;
+let wrongGuesses = [];
 
 // function to get a random word from the api
 function getWord() {
@@ -33,26 +34,37 @@ function makeGame(array) {
     }
 }
 
-//function to compare the letter guessed versus the game word
-// make conditional statement: if gameword contains letterguessed, add it to gameboard
-// if word is finished or out of points, run gameOver
+//  This function waits for the user to guess a letter,
+//  then renders it either to the game container if right,
+//  or into the wrong guesses container if incorrect.
+//  It also runs the gameOver function either when the 
+//  word is completed, or the user's score is zero. 
 document.addEventListener("keyup", function (event) {
-    let guess = event.key; // assigns the typed key to a variable
-    let correctGuess = wordArray.includes(guess); // checks if wordArray contains the letter, returns boolean
+    let guess = event.key;
+    let correctGuess = wordArray.includes(guess);
+    // The first part of this conditional adds letters to the correct spot
     if (letters.includes(guess)) {
         let correctSpot = document.querySelectorAll(`[data-letter=${guess}]`);
         for (i = 0; i < correctSpot.length; i++) {
-                // populate the blanks
-                correctSpot[i].textContent = guess;
+            correctSpot[i].textContent = guess;
         }
+        // This conditional adds an incorrect guess to the proper spot
+        // Then deducts points from the user, and runs gameOver if they
+        // run out of points
         if (!correctGuess) {
-            //populate the guessed letters box
-            //deduct points
-            let wrongGuesses = `<span>${guess} </span>`;
-            guessedCont.innerHTML += wrongGuesses;
-            userScore = userScore -= 10;
-            if (userScore == 0) gameOver();
-            return;
+            let wrongGuess = `<span id="guesses">${guess} </span>`;
+            if (!wrongGuesses.includes(guess)) {
+                wrongGuesses.push(guess)
+                guessCont.innerHTML += wrongGuess;
+                userScore = userScore -= 10;
+                if (userScore == 0) gameOver(false);
+            } else {
+                return;
+            }
+        }
+        // This checks if there are any blank letters left
+        if (!gameCont.innerText.includes("_")) {
+            gameOver(true);
         }
     } else {
         return;
