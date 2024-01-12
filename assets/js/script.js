@@ -160,9 +160,6 @@ function handleClearScores (e){
 }
 
 $highScoresContainer.addEventListener('click', handleClearScores)
-addToHighScores('Karen', 100)
-addToHighScores('Diamond', 250)
-addToHighScores('Bilal', 300)
-addToHighScores('Peter', 200)
+
 renderHighScores(highscores)
     
