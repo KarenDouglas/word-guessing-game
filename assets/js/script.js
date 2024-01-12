@@ -1,9 +1,12 @@
-const letters = Array.from("qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM");
 const gameCont = document.getElementById("game-board-container");
-const guessedCont = document.getElementById("guessed-box-container");
+const $highScoresContainer =document.querySelector('high-scores-container')
+const letters = Array.from("qwertyuiopasdfghjklzxcvbnm");
+const highscores = JSON.parse(localStorage.getItem('highScores')) || []
+let guessedCont = document.getElementById("guessed-box-container");
 let wordArray = [];
 let gameWord = "";
 let userScore = 70;
+let wrongGuesses = [];
 
 // function to get a random word from the api
 function getWord() {
@@ -16,7 +19,6 @@ function getWord() {
             wordArray = Array.from(gameWord);
             makeGame(wordArray);
             console.log(gameWord);
-            console.log(wordArray);
         })
 }
 
@@ -29,30 +31,38 @@ function makeGame(array) {
         gameBlank.textContent = "_ ";
         gameBlank.setAttribute("data-letter", array[i]);
         gameCont.appendChild(gameBlank);
-        console.log(gameBlank);
     }
 }
 
-//function to compare the letter guessed versus the game word
-// make conditional statement: if gameword contains letterguessed, add it to gameboard
-// if word is finished or out of points, run gameOver
+//  This function waits for the user to guess a letter,
+//  then renders it either to the game container if right,
+//  or into the wrong guesses container if incorrect.
+//  It also runs the gameOver function either when the 
+//  word is completed, or the user's score is zero. 
 document.addEventListener("keyup", function (event) {
-    let guess = event.key; // assigns the typed key to a variable
-    let correctGuess = wordArray.includes(guess); // checks if wordArray contains the letter, returns boolean
+    let guess = event.key;
+    let correctGuess = wordArray.includes(guess);
+    // The first part of this conditional adds letters to the correct spot
     if (letters.includes(guess)) {
         let correctSpot = document.querySelectorAll(`[data-letter=${guess}]`);
         for (i = 0; i < correctSpot.length; i++) {
-                // populate the blanks
-                correctSpot[i].textContent = guess;
+            correctSpot[i].textContent = guess;
         }
+        // This conditional adds an incorrect guess to the proper spot
         if (!correctGuess) {
-            //populate the guessed letters box
-            //deduct points
-            let wrongGuesses = `<span>${guess} </span>`;
-            guessedCont.innerHTML += wrongGuesses;
-            userScore = userScore -= 10;
-            if (userScore == 0) gameOver();
-            return;
+            let wrongGuess = `<span id="guesses">${guess} </span>`;
+            if (!wrongGuesses.includes(guess)) {
+                wrongGuesses.push(guess)
+                guessCont.innerHTML += wrongGuess;
+                userScore = userScore -= 10;
+                if (userScore == 0) gameOver(false);
+            } else {
+                return;
+            }
+        }
+        // This checks if there are any blank letters left
+        if (!gameCont.innerText.includes("_")) {
+            gameOver(true);
         }
     } else {
         return;
@@ -112,10 +122,55 @@ document.addEventListener('DOMContentLoaded', function () {
             isOpen = !isOpen;
             rulesContent.style.display = isOpen ? 'block' : 'none';
         });
-
-        const rulesSummary = document.querySelector('#rules-container summary');
-        if (rulesSummary) {
-            rulesSummary.innerHTML = 'Rules';
-        }
-    }
+}
+Hint();
 });
+
+// this function adds the NAME/STRING  and SCORE/NUMBER to the high scores array in local storage
+// its sorts the array by the  USERSCORE property
+function addToHighScores (name,score){
+    const scoreObj = {
+        userName: name,
+        userScore: score
+    }  
+        
+    highscores.push(scoreObj)
+    const sortedHighScores = highscores.sort((a, b) => b.userScore - a.userScore );
+    localStorage.setItem('highScores', JSON.stringify(sortedHighScores))
+    renderHighScores(highscores)
+}
+// Renders the High Scores from Local Storage
+function renderHighScores(array){
+    $highScoresContainer.innerHTML = 
+    `
+    <details>
+        <summary >High Scores</summary> 
+        <ul id="high-score-ul"></ul>
+        <button id ="clear-button" >Clear Score</button>      
+    </details>
+    `
+    $ul = $highScoresContainer.querySelector('#high-score-ul')
+    if(!array.length){
+        $ul.innerHTML = "nothing to see here"
+    }
+    for(let i = 0; i < array.length; i++){
+        if(i> 5){
+            break;
+        }
+        $ul.innerHTML+= `<li>${array[i].userName} : ${array[i].userScore} points</li> `
+    }
+}
+
+// clears the high scores list from local storage, renders change in DOM
+function handleClearScores (e){
+    if(e.target.id = "clear-button"){
+        let ul = e.target.previousElementSibling
+        localStorage.removeItem('highScores')
+        ul.innerHTML = "nothing to see here"   
+    }
+}
+
+$highScoresContainer.addEventListener('click', handleClearScores)
+
+renderHighScores(highscores)
+    
