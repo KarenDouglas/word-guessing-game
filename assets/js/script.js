@@ -1,13 +1,17 @@
+<<<<<<< HEAD
 const gameCont = document.getElementById("#game-board-container");
 const $highScoresContainer =document.querySelector('#high-scores-container')
 const letters = Array.from("qwertyuiopasdfghjklzxcvbnm");
 const highscores = JSON.parse(localStorage.getItem('highScores')) || []
 let guessedCont = document.getElementById("#guessed-box-container");
+=======
+const letters = Array.from("qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM");
+const gameCont = document.getElementById("game-board-container");
+const guessedCont = document.getElementById("guessed-box-container");
+>>>>>>> b7bf583034c1a8f74da5a636ad06cd8ed9ca2c44
 let wordArray = [];
 let gameWord = "";
 let userScore = 70;
-console.log(letters);
-console.log(gameWord);
 
 // function to get a random word from the api
 function getWord() {
@@ -17,8 +21,8 @@ function getWord() {
         })
         .then(function (data) {
             gameWord = data[0];
-            makeGame(wordArray);
             wordArray = Array.from(gameWord);
+            makeGame(wordArray);
             console.log(gameWord);
             console.log(wordArray);
         })
@@ -27,17 +31,14 @@ function getWord() {
 // function to make the game board of blank spaces
 // use template literal to insert html of blanks
 // each blank has its own id? for targetting purposes?
-function makeGame(word) {
-    for (i = 0; i < word.length; i++) {
-        // make variable of string of underscores
-        // insert as <p> tag, append to page in gameCont
-        word[i].add
-
+function makeGame(array) {
+    for (i = 0; i < array.length; i++) {
+        let gameBlank = document.createElement("span");
+        gameBlank.textContent = "_ ";
+        gameBlank.setAttribute("data-letter", array[i]);
+        gameCont.appendChild(gameBlank);
+        console.log(gameBlank);
     }
-    let gameBoard = `<p>_ _ _ _ _ _ _</p>`; // need to figure out how to format this better
-
-
-
 }
 
 //function to compare the letter guessed versus the game word
@@ -47,22 +48,19 @@ document.addEventListener("keyup", function (event) {
     let guess = event.key; // assigns the typed key to a variable
     let correctGuess = wordArray.includes(guess); // checks if wordArray contains the letter, returns boolean
     if (letters.includes(guess)) {
-        console.log(event.key);
-        for (i = 0; i < wordArray.length; i++) {
-            if (correctGuess) {
-                console.log(correctGuess);
+        let correctSpot = document.querySelectorAll(`[data-letter=${guess}]`);
+        for (i = 0; i < correctSpot.length; i++) {
                 // populate the blanks
-
-            } else {
-                console.log("wrong");
-                //populate the guessed letters box
-                // wrongBox.append(event.key);
-                //deduct points
-                userScore = userScore += -10;
-                if (userScore == 0) gameOver();
-                console.log(userScore);
-                return;
-            }
+                correctSpot[i].textContent = guess;
+        }
+        if (!correctGuess) {
+            //populate the guessed letters box
+            //deduct points
+            let wrongGuesses = `<span>${guess} </span>`;
+            guessedCont.innerHTML += wrongGuesses;
+            userScore = userScore -= 10;
+            if (userScore == 0) gameOver();
+            return;
         }
     } else {
         return;
@@ -71,36 +69,57 @@ document.addEventListener("keyup", function (event) {
 
 getWord();
 
-function getWordSynonym(word) {
-    const apiKey = 'apikey';
-    const apiUrl = `https://api.example.com/synonym?word=${word}&apiKey=${apiKey}`;
-
-    return fetch(apiUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            return data.getWordSynonym;
-        })
-        .catch(error => {
-            console.error(`Failed to fetch: ${error.message}`);
-            return 'synonym not available';// for exmpale in console 
-        });
-}
-function showMessage(message) {
-    console.log(message);
-}
-function Hint() {
+document.addEventListener('DOMContentLoaded', function () {
+    const hintContainer = document.getElementById('hint-container');
     const currentWord = 'example';
-    getWordSynonym(currentWord)
-        .then(wordSynonym => {
-            showMessage(`synonym of ${currentWord}: ${wordSynonym}`);
+
+    function getWordSynonym(word) {
+        const apiKey = 'apikey';
+        const apiUrl = `https://api.example.com/synonym?word=${word}&apiKey=${apiKey}`;
+
+        return fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                return data.getWordSynonym;
+            })
+            .catch(error => {
+                console.error(`Failed to fetch: ${error.message}`);
+                return 'synonym not available';// example for console 
+            });
+    }
+    function showMessage(message) {
+        hintContainer.innerHTML = message;
+    }
+    function Hint() {
+        hintContainer.addEventListener('click', function () {
+            getWordSynonym(currentWord)
+                .then(wordSynonym => {
+                    showMessage(`Synonym of ${currentWord}: ${wordSynonym}`);
+                });
+        });
+    }
+    Hint();
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const rulesContainer = document.getElementById('rules-container');
+    const rulesContent = document.getElementById('rulesContent');
+
+    if (rulesContainer && rulesContent) {
+        let isOpen = false;
+
+        rulesContainer.addEventListener('click', function () {
+            isOpen = !isOpen;
+            rulesContent.style.display = isOpen ? 'block' : 'none';
         });
 }
 Hint();
+});
 
 // this function adds the NAME/STRING  and SCORE/NUMBER to the high scores array in local storage
 // its sorts the array by the  USERSCORE property
@@ -152,3 +171,4 @@ addToHighScores('Diamond', 250)
 addToHighScores('Bilal', 300)
 addToHighScores('Peter', 200)
 renderHighScores(highscores)
+    
