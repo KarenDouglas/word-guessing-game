@@ -49,8 +49,6 @@ document.addEventListener("keyup", function (event) {
             correctSpot[i].textContent = guess;
         }
         // This conditional adds an incorrect guess to the proper spot
-        // Then deducts points from the user, and runs gameOver if they
-        // run out of points
         if (!correctGuess) {
             let wrongGuess = `<span id="guesses">${guess} </span>`;
             if (!wrongGuesses.includes(guess)) {
