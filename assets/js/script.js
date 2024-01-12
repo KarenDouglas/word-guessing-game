@@ -1,14 +1,8 @@
-<<<<<<< HEAD
 const gameCont = document.getElementById("#game-board-container");
 const $highScoresContainer =document.querySelector('#high-scores-container')
 const letters = Array.from("qwertyuiopasdfghjklzxcvbnm");
 const highscores = JSON.parse(localStorage.getItem('highScores')) || []
 let guessedCont = document.getElementById("#guessed-box-container");
-=======
-const letters = Array.from("qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM");
-const gameCont = document.getElementById("game-board-container");
-const guessedCont = document.getElementById("guessed-box-container");
->>>>>>> b7bf583034c1a8f74da5a636ad06cd8ed9ca2c44
 let wordArray = [];
 let gameWord = "";
 let userScore = 70;
