@@ -160,6 +160,45 @@ function renderHighScores(array){
         $ul.innerHTML+= `<li>${array[i].userName} : ${array[i].userScore} points</li> `
     }
 }
+Hint();
+
+//Modal
+$(document).ready(function(){
+    $('.modal').modal();
+  });
+
+  setTimeout(function(){
+$('.modal').modal('open')
+  },2000)
+
+  function displayOutcome() {
+    var userScore = 100; 
+    var initials = $("#initialsInput");
+    var highScore =$()
+
+    if (userScore !== 0) {
+      // Displays congratulations message with input for initials
+      $("#modalHeader").text("Congratulations! You won!");
+      $("#actionBtn").text("Submit");
+      $("#actionBtn").on("click", function(){
+          localStorage.setItem($("#initialsInput").val(), "score");
+          $('.modal').modal('close');
+      });
+      $("#initialsInput").show();
+      $("#highScoreDisplayBox").show(); // Show the high score text
+  } else {
+      // Displays sorry message without input for initials, a close button, and hide high score
+      $("#modalHeader").text("Sorry, you lost");
+      $("#actionBtn").text("Close");
+      $("#actionBtn").on("click", function(){
+          $('.modal').modal('close');
+      });
+      $("#initialsInput").hide();
+      $("#highScoreDisplayBox").hide(); // Hide the high score text
+    }
+  };
+
+  displayOutcome();
 
 // clears the high scores list from local storage, renders change in DOM
 function handleClearScores (e){
