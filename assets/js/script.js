@@ -110,7 +110,7 @@ $('.modal').modal('open')
   },2000)
 
   function displayOutcome() {
-    var userScore = 0; 
+    var userScore = 100; 
     var initials = $("#initialsInput");
     var highScore =$()
 
