@@ -99,3 +99,41 @@ function Hint() {
         });
 }
 Hint();
+
+//Modal
+$(document).ready(function(){
+    $('.modal').modal();
+  });
+
+  setTimeout(function(){
+$('.modal').modal('open')
+  },2000)
+
+  function displayOutcome() {
+    var userScore = 0; 
+    var initials = $("#initialsInput");
+    var highScore =$()
+
+    if (userScore !== 0) {
+      // Displays congratulations message with input for initials
+      $("#modalHeader").text("Congratulations! You won!");
+      $("#actionBtn").text("Submit");
+      $("#actionBtn").on("click", function(){
+          localStorage.setItem($("#initialsInput").val(), "score");
+          $('.modal').modal('close');
+      });
+      $("#initialsInput").show();
+      $("#highScoreDisplayBox").show(); // Show the high score text
+  } else {
+      // Displays sorry message without input for initials, a close button, and hide high score
+      $("#modalHeader").text("Sorry, you lost");
+      $("#actionBtn").text("Close");
+      $("#actionBtn").on("click", function(){
+          $('.modal').modal('close');
+      });
+      $("#initialsInput").hide();
+      $("#highScoreDisplayBox").hide(); // Hide the high score text
+    }
+  };
+
+  displayOutcome();
