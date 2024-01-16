@@ -44,7 +44,7 @@ h1 {
 /* order of containers */
 .header-container {
     order: 0;
-    border: black solid 1px;
+    border: greenyellow solid 1px;
   
 }
 
@@ -74,7 +74,7 @@ h1 {
 }
 .game-board-container span{
     display: inline-block;
-    border-bottom: black solid 1px;
+    border-bottom: greenyellow solid 1px;
     width: 20px;
     margin: 0 10px;
 }
@@ -90,6 +90,7 @@ header {
 .rules-container details,
 .high-scores-container details,
 .hint-container details{
+    border: greenyellow solid 1px;
     max-width: 100%;
 }
 
@@ -116,7 +117,7 @@ header {
 
 #score-container {
     height: 100px;
-    border: black solid 1px;
+    border: greenyellow solid 1px;
 }
 /* footer layout */
 footer{
@@ -125,7 +126,7 @@ footer{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border: black solid 1px;
+    border: greenyellow solid 1px;
 }
 footer p{
     height: fit-content;
@@ -205,8 +206,9 @@ footer ul{
     }
 
     .rules-container details,
-.high-scores-container details,.hint-container{
+.high-scores-container details,.hint-container details{
     max-width: 100%;
+    border: none;
    
 }
 .hint-container summary{

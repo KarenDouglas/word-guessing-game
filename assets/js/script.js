@@ -1,5 +1,5 @@
 const gameCont = document.getElementById("game-board-container");
-const $highScoresContainer = document.querySelector('high-scores-container')
+const $highScoresContainer = document.querySelector('#high-scores-container')
 const dictionaryLink = document.getElementById("dictionaryLink");
 const letters = Array.from("qwertyuiopasdfghjklzxcvbnm");
 const highscores = JSON.parse(localStorage.getItem('highScores')) || []
@@ -203,7 +203,9 @@ function handleClearScores(e) {
     if (e.target.id = "clear-button") {
         let ul = e.target.previousElementSibling
         localStorage.removeItem('highScores')
-        ul.innerHTML = "nothing to see here"
+       if(ul !== null){
+           ul.innerHTML = "nothing to see here"
+       }
     }
 }
 
