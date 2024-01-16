@@ -28,7 +28,7 @@ function getWord() {
 function makeGame(array) {
     for (i = 0; i < array.length; i++) {
         let gameBlank = document.createElement("span");
-        gameBlank.textContent = "_ ";
+        gameBlank.textContent = " ";
         gameBlank.setAttribute("data-letter", array[i]);
         gameCont.appendChild(gameBlank);
     }
