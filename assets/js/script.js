@@ -1,5 +1,5 @@
 const gameCont = document.getElementById("game-board-container");
-const $highScoresContainer = document.querySelector('high-scores-container')
+const $highScoresContainer =document.querySelector('high-scores-container')
 const letters = Array.from("qwertyuiopasdfghjklzxcvbnm");
 const highscores = JSON.parse(localStorage.getItem('highScores')) || []
 let guessCont = document.getElementById("guessed-box-container");
@@ -55,14 +55,14 @@ document.addEventListener("keyup", function (event) {
                 wrongGuesses.push(guess)
                 guessCont.innerHTML += wrongGuess;
                 userScore = userScore -= 10;
-                if (userScore == 0) gameOver(false);
+                if (userScore == 0) displayOutcome(false);
             } else {
                 return;
             }
         }
         // This checks if there are any blank letters left
         if (!gameCont.innerText.includes("_")) {
-            gameOver(true);
+            displayOutcome(true);
         }
     } else {
         return;
@@ -73,13 +73,9 @@ getWord();
 
 document.addEventListener('DOMContentLoaded', function () {
     const hintContainer = document.getElementById('hint-container');
-    const gameWord = '';
 
-    function getWordSynonym(word) {
-        const apiKey = 'apikey';
-        const apiUrl = `https://api.example.com/synonym?word=${word}&apiKey=${apiKey}`;
-
-        return fetch(apiUrl)
+    function getWordDef() {
+        return fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${gameWord}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Error: ${response.status}`);
@@ -87,11 +83,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 return response.json();
             })
             .then(data => {
-                return data.getWordSynonym;
+                showMessage(data[0].meanings[0].definitions[0].definition);
+                return data.getWordDef;
             })
             .catch(error => {
                 console.error(`Failed to fetch: ${error.message}`);
-                return 'synonym not available';// example for console 
+                return 'definition not available';// example for console 
             });
     }
     function showMessage(message) {
@@ -99,10 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     function Hint() {
         hintContainer.addEventListener('click', function () {
-            getWordSynonym(gameWord)
-                .then(wordSynonym => {
-                    showMessage(`Synonym of ${gameWord}: ${wordSynonym}`);
-                });
+            getWordDef();
         });
     }
     Hint();
@@ -122,27 +116,27 @@ document.addEventListener('DOMContentLoaded', function () {
             isOpen = !isOpen;
             rulesContent.style.display = isOpen ? 'block' : 'none';
         });
-    }
-    Hint();
+}
+Hint();
 });
 
 // this function adds the NAME/STRING  and SCORE/NUMBER to the high scores array in local storage
 // its sorts the array by the  USERSCORE property
-function addToHighScores(name, score) {
+function addToHighScores (name,score){
     const scoreObj = {
         userName: name,
         userScore: score
-    }
-
+    }  
+        
     highscores.push(scoreObj)
-    const sortedHighScores = highscores.sort((a, b) => b.userScore - a.userScore);
+    const sortedHighScores = highscores.sort((a, b) => b.userScore - a.userScore );
     localStorage.setItem('highScores', JSON.stringify(sortedHighScores))
     renderHighScores(highscores)
 }
 // Renders the High Scores from Local Storage
-function renderHighScores(array) {
-    $highScoresContainer.innerHTML =
-        `
+function renderHighScores(array){
+    $highScoresContainer.innerHTML = 
+    `
     <details>
         <summary >High Scores</summary> 
         <ul id="high-score-ul"></ul>
@@ -150,14 +144,14 @@ function renderHighScores(array) {
     </details>
     `
     $ul = $highScoresContainer.querySelector('#high-score-ul')
-    if (!array.length) {
+    if(!array.length){
         $ul.innerHTML = "nothing to see here"
     }
-    for (let i = 0; i < array.length; i++) {
-        if (i > 5) {
+    for(let i = 0; i < array.length; i++){
+        if(i> 5){
             break;
         }
-        $ul.innerHTML += `<li>${array[i].userName} : ${array[i].userScore} points</li> `
+        $ul.innerHTML+= `<li>${array[i].userName} : ${array[i].userScore} points</li> `
     }
 }
 Hint();
@@ -201,15 +195,15 @@ $('.modal').modal('open')
   displayOutcome();
 
 // clears the high scores list from local storage, renders change in DOM
-function handleClearScores(e) {
-    if (e.target.id = "clear-button") {
+function handleClearScores (e){
+    if(e.target.id = "clear-button"){
         let ul = e.target.previousElementSibling
         localStorage.removeItem('highScores')
-        ul.innerHTML = "nothing to see here"
+        ul.innerHTML = "nothing to see here"   
     }
 }
 
 $highScoresContainer.addEventListener('click', handleClearScores)
 
 renderHighScores(highscores)
-
+    
