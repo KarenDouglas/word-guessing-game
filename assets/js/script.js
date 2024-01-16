@@ -4,9 +4,11 @@ const dictionaryLink = document.getElementById("dictionaryLink");
 const letters = Array.from("qwertyuiopasdfghjklzxcvbnm");
 const highscores = JSON.parse(localStorage.getItem('highScores')) || []
 let guessCont = document.getElementById("guessed-box-container");
+let scoreCont = document.getElementById("score-container");
+let iniInp = document.getElementById("initialsInput");
 let wordArray = [];
 let gameWord = "";
-let userScore = 70;
+let userScore = 100;
 let wrongGuesses = [];
 
 // function to get a random word from the api
@@ -20,6 +22,7 @@ function getWord() {
             wordArray = Array.from(gameWord);
             makeGame(wordArray);
             console.log(gameWord);
+            scoreCont.textContent = userScore + " points";
         })
 }
 
@@ -29,9 +32,10 @@ function getWord() {
 function makeGame(array) {
     for (i = 0; i < array.length; i++) {
         let gameBlank = document.createElement("span");
-        gameBlank.textContent = " ";
+        gameBlank.textContent = "?";
         gameBlank.setAttribute("data-letter", array[i]);
         gameCont.appendChild(gameBlank);
+
     }
 }
 
@@ -55,14 +59,17 @@ document.addEventListener("keyup", function (event) {
             if (!wrongGuesses.includes(guess)) {
                 wrongGuesses.push(guess);
                 guessCont.innerHTML += wrongGuess;
-                userScore = userScore -= 10;
-                if (userScore == 0) displayOutcome();
+                userScore -= 10;
+                scoreCont.textContent = userScore + " points";
+                if (userScore == 0) {
+                    displayOutcome();
+                }
             } else {
                 return;
             }
         }
         // This checks if there are any blank letters left
-        if (!gameCont.innerText.includes("_")) {
+        if (!gameCont.innerText.includes("?")) {
             displayOutcome();
         }
     } else {
@@ -175,15 +182,15 @@ function displayOutcome() {
         // Displays congratulations message with input for initials
         $("#modalHeader").text("Congratulations! You won!");
         $("#actionBtn").text("Submit");
-        $("#actionBtn").on("click", function () {
-            localStorage.setItem($("#initialsInput").val(), "score");
-            $('.modal').modal('close');
-        });
         $("#initialsInput").show();
+        
         $("#highScoreDisplayBox").show(); // Show the high score text
         $("#highScore").text(userScore);
         dictionaryLink.href = `https://www.merriam-webster.com/dictionary/${gameWord}`;
         dictionaryLink.target = "_blank";
+        $("#actionBtn").on("click", function() {
+            addToHighScores(iniInp.value, userScore);
+        }); //add value of initialsInput and userScore
     } else {
         // Displays sorry message without input for initials, a close button, and hide high score
         $("#modalHeader").text("Sorry, you lost");
