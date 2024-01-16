@@ -1,5 +1,5 @@
 const gameCont = document.getElementById("game-board-container");
-const $highScoresContainer = document.querySelector('high-scores-container')
+const $highScoresContainer = document.getElementById('high-scores-container');
 const dictionaryLink = document.getElementById("dictionaryLink");
 const letters = Array.from("qwertyuiopasdfghjklzxcvbnm");
 const highscores = JSON.parse(localStorage.getItem('highScores')) || []
@@ -175,10 +175,7 @@ function displayOutcome() {
         // Displays congratulations message with input for initials
         $("#modalHeader").text("Congratulations! You won!");
         $("#actionBtn").text("Submit");
-        $("#actionBtn").on("click", function () {
-            localStorage.setItem($("#initialsInput").val(), "score");
-            $('.modal').modal('close');
-        });
+        $("#actionBtn").on("click", addToHighScores()); //add value of initialsInput and userScore
         $("#initialsInput").show();
         $("#highScoreDisplayBox").show(); // Show the high score text
         $("#highScore").text(userScore);
