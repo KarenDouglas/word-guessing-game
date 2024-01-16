@@ -37,15 +37,17 @@ h1 {
     order: 4;
 }
 
+
+
+/*  Header Layout*/
+header {
+    
+    text-align: center;
+}
+/* layout/styles for the Summary tags */
 summary {
     list-style: none;
 }
-
-header {
-
-    text-align: center;
-}
-
 .rules-container,
 .high-scores-container,
 .hint-container {
@@ -60,6 +62,7 @@ header {
     min-height: 50px;
 }
 
+/* Game Container styles/layout  includes  GAME BOARD AND GAME GUESSED BOX */
 .game-container {
     height: 500px;
     border: black solid 1px;
@@ -80,7 +83,25 @@ header {
     height: 100px;
     border: black solid 1px;
 }
+/* footer layout */
+footer{
+    margin: 0 auto;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: black solid 1px;
+}
+footer p{
+    height: fit-content;
+    margin: 0;
+    text-align: center;
 
+}
+footer ul{
+    text-align: center;
+}
+/*  large Container Styles */
 @media screen and (min-width: 600px) {
     /* main container styles for large  screens */
     main {
@@ -133,5 +154,18 @@ header {
         height: 700px;
         padding: 0 3%;
     }
-
+    /* Footer Layout  for large screens*/
+    footer{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        border: black solid 1px;
+        max-width: 1200px;
+        align-items: center;
+    }
+    footer ul{
+        display: flex;
+        justify-content: space-around;
+        width: 80%;
+    }
 }
