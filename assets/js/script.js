@@ -73,13 +73,9 @@ getWord();
 
 document.addEventListener('DOMContentLoaded', function () {
     const hintContainer = document.getElementById('hint-container');
-    const gameWord = '';
 
-    function getWordSynonym(word) {
-        const apiKey = 'apikey';
-        const apiUrl = `https://api.example.com/synonym?word=${word}&apiKey=${apiKey}`;
-       
-        return fetch(apiUrl)
+    function getWordDef() {
+        return fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${gameWord}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`Error: ${response.status}`);
@@ -87,11 +83,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 return response.json();
             })
             .then(data => {
-                return data.getWordSynonym;
+                showMessage(data[0].meanings[0].definitions[0].definition);
+                return data.getWordDef;
             })
             .catch(error => {
                 console.error(`Failed to fetch: ${error.message}`);
-                return 'synonym not available';// example for console 
+                return 'definition not available';// example for console 
             });
     }
     function showMessage(message) {
@@ -99,10 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     function Hint() {
         hintContainer.addEventListener('click', function () {
-            getWordSynonym(gameWord)
-                .then(wordSynonym => {
-                    showMessage(`Synonym of ${gameWord}: ${wordSynonym}`);
-                });
+            getWordDef();
         });
     }
     Hint();
