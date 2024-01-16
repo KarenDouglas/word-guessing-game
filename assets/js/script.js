@@ -55,14 +55,14 @@ document.addEventListener("keyup", function (event) {
                 wrongGuesses.push(guess)
                 guessCont.innerHTML += wrongGuess;
                 userScore = userScore -= 10;
-                if (userScore == 0) gameOver(false);
+                if (userScore == 0) displayOutcome(false);
             } else {
                 return;
             }
         }
         // This checks if there are any blank letters left
         if (!gameCont.innerText.includes("_")) {
-            gameOver(true);
+            displayOutcome(true);
         }
     } else {
         return;
