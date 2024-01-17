@@ -1,15 +1,19 @@
 const gameCont = document.getElementById("game-board-container");
-const $highScoresContainer = document.querySelector('high-scores-container')
+const $highScoresContainer = document.querySelector('#high-scores-container')
 const dictionaryLink = document.getElementById("dictionaryLink");
 const letters = Array.from("qwertyuiopasdfghjklzxcvbnm");
 const highscores = JSON.parse(localStorage.getItem('highScores')) || []
 let guessCont = document.getElementById("guessed-box-container");
+let scoreCont = document.getElementById("score-container");
+let iniInp = document.getElementById("initialsInput");
 let wordArray = [];
 let gameWord = "";
-let userScore = 70;
+let userScore = 100;
 let wrongGuesses = [];
 
-// function to get a random word from the api
+// This function generates a random word from a database,
+// and saves that as an array to seperate the letters,
+// then runs the makeGame function with that array
 function getWord() {
     return fetch(`https://random-word-api.vercel.app/api?words=1&length=7`)
         .then(function (response) {
@@ -20,49 +24,59 @@ function getWord() {
             wordArray = Array.from(gameWord);
             makeGame(wordArray);
             console.log(gameWord);
+            scoreCont.textContent = userScore + " points";
         })
 }
 
-// function to make the game board of blank spaces
-// use template literal to insert html of blanks
-// each blank has its own id? for targetting purposes?
+// This function populates spaces on the game board by
+// iterating over the array and creating a ? character
+// that is then rendered onto the page
 function makeGame(array) {
     for (i = 0; i < array.length; i++) {
         let gameBlank = document.createElement("span");
-        gameBlank.textContent = "_ ";
+        gameBlank.textContent = "?";
         gameBlank.setAttribute("data-letter", array[i]);
         gameCont.appendChild(gameBlank);
+
     }
 }
 
 //  This function waits for the user to guess a letter,
 //  then renders it either to the game container if right,
 //  or into the wrong guesses container if incorrect.
-//  It also runs the gameOver function either when the 
+//  It also runs the displayOutcome function either when the 
 //  word is completed, or the user's score is zero. 
 document.addEventListener("keyup", function (event) {
     let guess = event.key;
     let correctGuess = wordArray.includes(guess);
-    // The first part of this conditional adds letters to the correct spot
+    // The first part of this conditional adds correct letters
+    // to the correct spot
     if (letters.includes(guess)) {
         let correctSpot = document.querySelectorAll(`[data-letter=${guess}]`);
         for (i = 0; i < correctSpot.length; i++) {
             correctSpot[i].textContent = guess;
         }
-        // This conditional adds an incorrect guess to the proper spot
+        // This conditional adds an incorrect guess to the proper spot,
+        // as well as deducting points from the user's score
         if (!correctGuess) {
             let wrongGuess = `<span id="guesses">${guess} </span>`;
             if (!wrongGuesses.includes(guess)) {
                 wrongGuesses.push(guess);
                 guessCont.innerHTML += wrongGuess;
-                userScore = userScore -= 10;
-                if (userScore == 0) displayOutcome();
+                userScore -= 10;
+                scoreCont.textContent = userScore + " points";
+                // And then checks to see if the user is out of points
+                // resulting in a game over situation.
+                if (userScore == 0) {
+                    displayOutcome();
+                }
             } else {
                 return;
             }
         }
-        // This checks if there are any blank letters left
-        if (!gameCont.innerText.includes("_")) {
+        // This checks if there are any blank letters left,
+        // and if there aren't, operates as a winning scenario
+        if (!gameCont.innerText.includes("?")) {
             displayOutcome();
         }
     } else {
@@ -70,8 +84,13 @@ document.addEventListener("keyup", function (event) {
     }
 })
 
+// We then call the first function, ensuring that 
+// it is rendered on page load.
 getWord();
 
+// This function operates as a hint reveal option
+// It pulls a definition from a database that corresponds
+// to the random word. 
 document.addEventListener('DOMContentLoaded', function () {
     const hintContainer = document.getElementById('hint-container');
 
@@ -103,6 +122,8 @@ document.addEventListener('DOMContentLoaded', function () {
     Hint();
 });
 
+// This is the dropdown rules menu functionality
+// Set to load open automatically on page load
 document.addEventListener('DOMContentLoaded', function () {
     const rulesContainer = document.getElementById('rules-container');
     const rulesContent = document.getElementById('rules-content');
@@ -120,8 +141,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-// this function adds the NAME/STRING  and SCORE/NUMBER to the high scores array in local storage
-// its sorts the array by the  USERSCORE property
+// This function saves the user's name and score into local storage
+// It also sorts the high scores based on score
 function addToHighScores(name, score) {
     const scoreObj = {
         userName: name,
@@ -131,7 +152,8 @@ function addToHighScores(name, score) {
     highscores.push(scoreObj)
     const sortedHighScores = highscores.sort((a, b) => b.userScore - a.userScore);
     localStorage.setItem('highScores', JSON.stringify(sortedHighScores))
-    renderHighScores(highscores)
+    console.log(sortedHighScores)
+    renderHighScores(sortedHighScores)
 }
 // Renders the High Scores from Local Storage
 function renderHighScores(array) {
@@ -155,15 +177,13 @@ function renderHighScores(array) {
     }
 }
 
-//Modal
+//Modal 
 $(document).ready(function () {
     $('.modal').modal();
 });
 
-// setTimeout(function () {
-//     $('.modal').modal('open')
-// }, 2000)
-
+// This displays the modal's content,
+// which changes whether win or lose.
 function displayOutcome() {
     var initials = $("#initialsInput");
     var highScore = $();
@@ -175,18 +195,20 @@ function displayOutcome() {
         // Displays congratulations message with input for initials
         $("#modalHeader").text("Congratulations! You won!");
         $("#actionBtn").text("Submit");
-        $("#actionBtn").on("click", function () {
-            localStorage.setItem($("#initialsInput").val(), "score");
-            $('.modal').modal('close');
-        });
         $("#initialsInput").show();
-        $("#highScoreDisplayBox").show(); // Show the high score text
+        
+        $("#highScoreDisplayBox").show();
+        // Show the high score text
         $("#highScore").text(userScore);
+        console.log($("#highScore"))
         dictionaryLink.href = `https://www.merriam-webster.com/dictionary/${gameWord}`;
         dictionaryLink.target = "_blank";
+        $("#actionBtn").on("click", function() {
+            addToHighScores(iniInp.value, userScore);
+        }); //add value of initialsInput and userScore
     } else {
         // Displays sorry message without input for initials, a close button, and hide high score
-        $("#modalHeader").text("Sorry, you lost");
+        $("#modalHeader").text("Sorry, you lost, the word was " + gameWord);
         $("#actionBtn").text("Close");
         $("#actionBtn").on("click", function () {
             $('.modal').modal('close');
@@ -198,12 +220,14 @@ function displayOutcome() {
     }
 };
 
-// clears the high scores list from local storage, renders change in DOM
+// Clears the high scores list from local storage, renders change in DOM
 function handleClearScores(e) {
     if (e.target.id = "clear-button") {
         let ul = e.target.previousElementSibling
         localStorage.removeItem('highScores')
-        ul.innerHTML = "nothing to see here"
+       if(ul !== null){
+           ul.innerHTML = "nothing to see here"
+       }
     }
 }
 
