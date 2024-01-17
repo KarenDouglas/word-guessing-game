@@ -101,7 +101,7 @@ header {
     min-height: 50px;
 }
 
-/* Game Container styles/layout  includes  GAME BOARD AND GAME GUESSED BOX */
+/* Game Container styles/layout  includes  GAME BOARD AND GAME GUESSED BOX for all screens */
 .game-container {
     height: 500px;
 }
@@ -113,8 +113,20 @@ header {
 
 .guessed-box-container {
     min-height: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+.guessed-box-container span{
+    display: inline-block;
+    width: 30px;
+    height: 40px;
+    border: greenyellow solid 1px;
+    border-radius: 10px;
+    margin: 0 10px;
+    padding: 4%;
+}
 #score-container {
     height: 100px;
     border: greenyellow solid 1px;

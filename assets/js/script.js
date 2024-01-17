@@ -138,7 +138,8 @@ function addToHighScores(name, score) {
     highscores.push(scoreObj)
     const sortedHighScores = highscores.sort((a, b) => b.userScore - a.userScore);
     localStorage.setItem('highScores', JSON.stringify(sortedHighScores))
-    renderHighScores(highscores)
+    console.log(sortedHighScores)
+    renderHighScores(sortedHighScores)
 }
 // Renders the High Scores from Local Storage
 function renderHighScores(array) {
@@ -184,8 +185,10 @@ function displayOutcome() {
         $("#actionBtn").text("Submit");
         $("#initialsInput").show();
         
-        $("#highScoreDisplayBox").show(); // Show the high score text
+        $("#highScoreDisplayBox").show();
+        // Show the high score text
         $("#highScore").text(userScore);
+        console.log($("#highScore"))
         dictionaryLink.href = `https://www.merriam-webster.com/dictionary/${gameWord}`;
         dictionaryLink.target = "_blank";
         $("#actionBtn").on("click", function() {
