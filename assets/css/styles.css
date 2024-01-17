@@ -300,3 +300,15 @@ footer ul {
         margin: 0 10px;
     }
 }
+
+
+
+#actionBtn{
+    border-radius: 12px;
+    background-color: greenyellow;
+}
+
+#play-again-button{
+    background-color: greenyellow;
+    border-radius: 12px;
+}
