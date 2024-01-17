@@ -18,14 +18,12 @@
         
         <!-- RULES CONTAINER ID: rules-container -->
         <section id="rules-container" class="rules-container col s12">
-            <details>
+            <details open>
                 <summary>Rules</summary>
-                <div id="rules-content" style="display: none;">
                     <!-- Text content will appear here after a click -->
                     <p>1. Guess a letter to fill in the blank!</p>
                     <p>2. You only have a certain amount of guesses; be sure to guess correctly.</p>
                     <p>3. Lastly, have fun!</p>
-                </div>
         
             </details>
         </section>
@@ -42,11 +40,10 @@
              <!-- GAME BOARD CONTAINER ID: game-board-container -->
             <section id="game-container" class="game-container col s12">
                 <div id="game-board-container" class="game-board-container">
-                    <p>id: "game-board-container"</p>
+                  
                 </div>
                     <!-- GUESSED BOX CONTAINER ID: guessed-box-container -->
                 <div id="guessed-box-container" class='guessed-box-container'>
-                    <p>id: "guessed-box-container"</p>
                 </div>
             </section>
             <div id="hint-score-container" class="hint-score-container col s12">
@@ -54,8 +51,7 @@
                     <!-- HINT CONTAINER ID: hint-container -->
                     <section id="hint-container" class="hint-container col  s12">
                         <details>
-                            <summary>Hint</summary>
-                           - id: 'hint-container'
+                            <summary>Need a Hint?</summary>
                         </details>
                     </section>
                      <!-- SCORE CONTAINER ID: score-container -->
@@ -74,12 +70,17 @@
         <div class="modal-content">
 
             <h2 id="modalHeader"></h2>
-            <p id="dictionaryWord">L</p>
-            <p id="dictionaryDefinition">L</p>
+            <a id="dictionaryLink">Learn More Here</a>
             <input type="text" id="initialsInput" placeholder="Enter your initials">
             <button id="actionBtn"></button>
+<<<<<<< HEAD
             <div id="scoreDisplayBox">
                 <p>Your Score: <span id="highScore">0</span></p>
+=======
+            <button id="play-again-button">Play Again?</button>
+            <div id="highScoreDisplayBox">
+                <p>Score: <span id="highScore"></span></p>
+>>>>>>> e4db43ca72e261c24f2a76a27dbd25fc298a849b
             </div>
         </div>
     </div>
