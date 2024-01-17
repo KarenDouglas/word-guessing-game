@@ -1,11 +1,14 @@
 const gameCont = document.getElementById("game-board-container");
-const $highScoresContainer = document.querySelector('#high-scores-container')
+const $highScoresContainer = document.querySelector('#high-scores-container');
+const hintContainer = document.getElementById('hint-container');
+const playAgainBtn = document.getElementById("play-again-button");
 const dictionaryLink = document.getElementById("dictionaryLink");
 const letters = Array.from("qwertyuiopasdfghjklzxcvbnm");
 const highscores = JSON.parse(localStorage.getItem('highScores')) || []
 let guessCont = document.getElementById("guessed-box-container");
 let scoreCont = document.getElementById("score-container");
 let iniInp = document.getElementById("initialsInput");
+let gameBlank = document.createElement("span");
 let wordArray = [];
 let gameWord = "";
 let userScore = 100;
@@ -16,16 +19,16 @@ let wrongGuesses = [];
 // then runs the makeGame function with that array
 function getWord() {
     return fetch(`https://random-word-api.vercel.app/api?words=1&length=7`)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            gameWord = data[0];
-            wordArray = Array.from(gameWord);
-            makeGame(wordArray);
-            console.log(gameWord);
-            scoreCont.textContent = userScore + " points";
-        })
+    .then(function (response) {
+        return response.json();
+    })
+    .then(function (data) {
+        gameWord = data[0];
+        wordArray = Array.from(gameWord);
+        makeGame(wordArray);
+        console.log(gameWord);
+        scoreCont.textContent = userScore + " points";
+    })
 }
 
 // This function populates spaces on the game board by
@@ -33,7 +36,7 @@ function getWord() {
 // that is then rendered onto the page
 function makeGame(array) {
     for (i = 0; i < array.length; i++) {
-        let gameBlank = document.createElement("span");
+        gameBlank = document.createElement("span");
         gameBlank.textContent = "?";
         gameBlank.setAttribute("data-letter", array[i]);
         gameCont.appendChild(gameBlank);
@@ -88,12 +91,26 @@ document.addEventListener("keyup", function (event) {
 // it is rendered on page load.
 getWord();
 
+// This function resets the game. Clears the board, then re-runs 
+// the function to start the game
+
+function resetGame() {
+    userScore = 100;
+    wrongGuesses = [];
+    gameCont.innerHTML = "";
+    guessCont.innerHTML = "";
+    hintContainer.innerHTML = `
+    <details>
+    <summary>Need a Hint?</summary>
+    </details>`;
+    $('.modal').modal('close');
+    getWord();
+}
+
 // This function operates as a hint reveal option
 // It pulls a definition from a database that corresponds
 // to the random word. 
 document.addEventListener('DOMContentLoaded', function () {
-    const hintContainer = document.getElementById('hint-container');
-
     function getWordDef() {
         return fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${gameWord}`)
             .then(response => {
@@ -190,20 +207,20 @@ function displayOutcome() {
     $('.modal').modal('open');
 
     if (userScore !== 0) {
-        
-        
+
+
         // Displays congratulations message with input for initials
         $("#modalHeader").text("Congratulations! You won!");
         $("#actionBtn").text("Submit");
         $("#initialsInput").show();
-        
+
         $("#highScoreDisplayBox").show();
         // Show the high score text
         $("#highScore").text(userScore);
         console.log($("#highScore"))
         dictionaryLink.href = `https://www.merriam-webster.com/dictionary/${gameWord}`;
         dictionaryLink.target = "_blank";
-        $("#actionBtn").on("click", function() {
+        $("#actionBtn").on("click", function () {
             addToHighScores(iniInp.value, userScore);
         }); //add value of initialsInput and userScore
     } else {
@@ -225,13 +242,14 @@ function handleClearScores(e) {
     if (e.target.id = "clear-button") {
         let ul = e.target.previousElementSibling
         localStorage.removeItem('highScores')
-       if(ul !== null){
-           ul.innerHTML = "nothing to see here"
-       }
+        if (ul !== null) {
+            ul.innerHTML = "nothing to see here"
+        }
     }
 }
 
 $highScoresContainer.addEventListener('click', handleClearScores);
+playAgainBtn.addEventListener("click", resetGame);
 
 renderHighScores(highscores);
 
