@@ -267,6 +267,7 @@ footer ul {
     border: greenyellow 1px solid;
     border-top: none;
     border-radius: 0 0 30px 30px;
+    z-index: 1;
 }
 
     #hint-score-container{
