@@ -40,7 +40,19 @@ main {
 #main-container{
     max-width: 450px;
 }
+
+@keyframes myAnim {
+	0% {
+		transform: scale(0);
+	}
+
+	100% {
+		transform: scale(1);
+	}
+}
+
 h1 {
+    animation: myAnim 2s ease 0s 1 normal forwards;
     font-size: 24px;
 
 }
@@ -199,12 +211,7 @@ footer ul {
         border: none;
     }
 
-    h1 {
-        animation: floatAnimation 2s ease-in-out infinite; /* Animated */
-        font-size: 24px;
-        font-size: 30x;
-        margin: 18%;
-    }
+
 
     #high-scores-container {
         order: 2;
