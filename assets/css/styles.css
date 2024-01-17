@@ -103,8 +103,18 @@ header {
     text-align: center;
     min-height: 50px;
 }
-
-/* Game Container styles/layout  includes  GAME BOARD AND GAME GUESSED BOX for all screens, */
+.high-scores-container button{
+    border: greenyellow solid 1px;
+    background: none;
+    color: greenyellow;
+    height: 30px;
+    border-radius: 10px;
+}
+.high-scores-container button:hover{
+ background-color: greenyellow;
+ color: black;   
+}
+/* Game Container styles/layout  includes  GAME BOARD AND GAME GUESSED BOX for all screens */
 .game-container {
     height: 500px;
 }
@@ -120,6 +130,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     animation: fadeIn 2s ease-in-out; /* Animations */
 }
 
