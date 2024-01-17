@@ -199,7 +199,7 @@ function renderHighScores(array) {
         $ul.innerHTML = "nothing to see here"
     }
     for (let i = 0; i < array.length; i++) {
-        if (i > 3) {
+        if (i > 5) {
             break;
         }
         $ul.innerHTML += `<li>${array[i].userName} : ${array[i].userScore} points</li> `
@@ -290,7 +290,9 @@ function handleClearScores(e) {
         if (ul !== null) {
             ul.innerHTML = "nothing to see here"
         }
-
+        if (ul !== null) {
+            ul.innerHTML = "nothing to see here"
+        }
     }
 }
 
