@@ -76,6 +76,19 @@ The code is structured into sections, each handling specific aspects of the game
     var highScore = $();
     $('.modal').modal('open');
    ```
+* Animations: Using @keyframes, and animation styles to immerse the user experience.
+  ```
+  animation: floatAnimation 2s ease-in-out infinite;
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  ```
   
 ### Closing 
 This game is a fun, exciting way to learn new words and have fun while doing it. This game can still be improved by adding extra factors, effects, and more objective based matter.  
