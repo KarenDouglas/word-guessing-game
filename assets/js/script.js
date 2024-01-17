@@ -38,6 +38,7 @@ function makeGame(array) {
         gameBlank.textContent = "?";
         gameBlank.setAttribute("data-letter", array[i]);
         gameCont.appendChild(gameBlank);
+        
 
     }
 }
@@ -105,6 +106,7 @@ function resetGame() {
     <summary>Need a Hint?</summary>
     </details>`;
     $('.modal').modal('close');
+    document.addEventListener("keyup", letterGuess);
     getWord();
 }
 
