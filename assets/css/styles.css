@@ -23,6 +23,7 @@ main, footer{
     background-color: black;
 }
 .game-board-container, .guessed-box-container{
+
     background-color: black;
     border: greenyellow solid 1px;
     border-radius: 20px;
@@ -36,6 +37,7 @@ main {
 #main-container{
     max-width: 450px;
 }
+
 h1 {
     font-size: 24px;
 
@@ -82,9 +84,10 @@ h1 {
 
 /*  Header Layout*/
 header {
-    
+    animation: slideIn 1s ease-in-out;
     text-align: center;
 }
+
 /* layout/styles for the Summary tags */
 
 .rules-container details,
@@ -117,6 +120,7 @@ header {
 }
 
 .game-board-container {
+    animation: fadeIn 2s ease-in-out; /* Animations */
     margin: 40px 0 20px 0;
     min-height: 50%;
 }
@@ -127,6 +131,7 @@ header {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    animation: fadeIn 2s ease-in-out; /* Animations */
 }
 
 .guessed-box-container span{
@@ -141,9 +146,11 @@ header {
 #score-container {
     height: 100px;
     border: greenyellow solid 1px;
+    animation: fadeIn 2s ease-in-out; /* Animations */
 }
+
 /* footer layout */
-footer{
+footer {
     margin: 0 auto;
     max-width: 450px;
     display: flex;
@@ -151,15 +158,18 @@ footer{
     justify-content: center;
     border: greenyellow solid 1px;
 }
-footer p{
+
+footer p {
     height: fit-content;
     margin: 0;
     text-align: center;
 
 }
-footer ul{
+
+footer ul {
     text-align: center;
 }
+
 /*  large Container Styles */
 @media screen and (min-width: 685px) {
     /* main container styles for large  screens */
@@ -168,7 +178,8 @@ footer ul{
         flex-direction: row;
         flex-wrap: wrap;
     }
-    #main-container{
+
+    #main-container {
         max-width: 1200px;
     }
 
@@ -178,22 +189,25 @@ footer ul{
         height: 100px;
     }
     
-/* header styles for large screens */
+/* header styles for large screens*/
     .header-container {
         order: 1;
         width: 40%;
         height: 200px;
         border: none;
     }
+
     h1 {
+        animation: floatAnimation 2s ease-in-out infinite; /* Animated */
+        font-size: 24px;
         font-size: 30x;
         margin: 18%;
     }
 
     #high-scores-container {
         order: 2;
-        width: 30%;  
-        height: 100px;  
+        width: 30%;
+        height: 100px;
     }
 
     #hint-score-container {
@@ -201,11 +215,13 @@ footer ul{
         width: 30%;
         height: 700px;
         padding: 30px 40px;
-        
+        animation: fadeIn 2s ease-in-out; /* Animations */
+
     }
 
     .hint-container {
         margin: 40% 0 20% 0;
+        animation: floatAnimation 2s ease-in-out infinite; /* animated*/
     }
 
     #game-container {
@@ -248,7 +264,7 @@ footer ul{
         margin: 0;
     }
     /* Footer Layout  for large screens*/
-    footer{
+    footer {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
@@ -256,7 +272,8 @@ footer ul{
         max-width: 1200px;
         align-items: center;
     }
-    footer ul{
+
+    footer ul {
         display: flex;
         justify-content: space-around;
         width: 80%;
@@ -269,3 +286,34 @@ footer ul{
         margin: 0 10px;
     }
 }
+/* for the animations*/
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideIn {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  @keyframes floatAnimation {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
