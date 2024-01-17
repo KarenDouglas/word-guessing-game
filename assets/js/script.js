@@ -2,7 +2,6 @@ const gameCont = document.getElementById("game-board-container");
 const $highScoresContainer = document.querySelector('#high-scores-container')
 const dictionaryLink = document.getElementById("dictionaryLink");
 const letters = Array.from("qwertyuiopasdfghjklzxcvbnm");
-const highscores = JSON.parse(localStorage.getItem('highScores')) || []
 let guessCont = document.getElementById("guessed-box-container");
 let scoreCont = document.getElementById("score-container");
 let iniInp = document.getElementById("initialsInput");
@@ -10,7 +9,6 @@ let wordArray = [];
 let gameWord = "";
 let userScore = 100;
 let wrongGuesses = [];
-
 // function to get a random word from the api
 function getWord() {
     return fetch(`https://random-word-api.vercel.app/api?words=1&length=7`)
@@ -52,6 +50,7 @@ document.addEventListener("keyup", function (event) {
         let correctSpot = document.querySelectorAll(`[data-letter=${guess}]`);
         for (i = 0; i < correctSpot.length; i++) {
             correctSpot[i].textContent = guess;
+            // styling for correct 
         }
         // This conditional adds an incorrect guess to the proper spot
         if (!correctGuess) {
@@ -129,28 +128,57 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // this function adds the NAME/STRING  and SCORE/NUMBER to the high scores array in local storage
 // its sorts the array by the  USERSCORE property
+// let highScoresStorage = localStorage.getItem('highScores')
+// console.log('hss',highScoresStorage)
+// if(highScoresStorage === null){
+//     highScoresStorage = []
+//     console.log('no local storage yet') 
+//     console.log('ls', localStorage)
+//     localStorage.setItem('highScores', JSON.stringify(highScoresStorage))
+//     location.reload()
+//     renderHighScores(highScoresStorage)
+
+// }else{
+//     console.log('local storage is') 
+//     highScoresStorage =JSON.parse(localStorage.getItem('highScores'));
+//     console.log('ls', highScoresStorage)
+//     renderHighScores(highScoresStorage)
+
+// }
+let highScoresStorage = JSON.parse(localStorage.getItem('highScores')) || [];
+
+if (highScoresStorage === null || highScoresStorage === undefined) {
+    highScoresStorage = [];
+    console.log('No local storage yet');
+}
+
+console.log('ls', highScoresStorage);
+renderHighScores(highScoresStorage.sort((a, b) => b.userScore - a.userScore));
+
+
 function addToHighScores(name, score) {
-    const scoreObj = {
+    const scoreOBJ = {
         userName: name,
         userScore: score
     }
-
-    highscores.push(scoreObj)
-    const sortedHighScores = highscores.sort((a, b) => b.userScore - a.userScore);
-    localStorage.setItem('highScores', JSON.stringify(sortedHighScores))
-    console.log(sortedHighScores)
-    renderHighScores(sortedHighScores)
+    highScoresStorage.push(scoreOBJ)
+    localStorage.setItem('highScores', JSON.stringify(highScoresStorage))
+    console.log('after set',localStorage.getItem('highScores'))
+    highScoresStorage = JSON.parse(localStorage.getItem('highScores')).sort((a, b) => b.userScore - a.userScore)
+    renderHighScores(highScoresStorage)
+    
 }
 // Renders the High Scores from Local Storage
 function renderHighScores(array) {
     $highScoresContainer.innerHTML =
-        `
+    `
     <details>
-        <summary >High Scores</summary> 
-        <ul id="high-score-ul"></ul>
-        <button id ="clear-button" >Clear Score</button>      
+    <summary >High Scores</summary> 
+    <ul id="high-score-ul"></ul>
+    <button id ="clear-button"  >Clear Score</button>      
     </details>
     `
+    $button = $highScoresContainer.querySelector('#clear-button')
     $ul = $highScoresContainer.querySelector('#high-score-ul')
     if (!array.length) {
         $ul.innerHTML = "nothing to see here"
@@ -161,6 +189,7 @@ function renderHighScores(array) {
         }
         $ul.innerHTML += `<li>${array[i].userName} : ${array[i].userScore} points</li> `
     }
+    $button.addEventListener('click', handleClearScores);
 }
 
 //Modal
@@ -210,6 +239,7 @@ function displayOutcome() {
 
 // clears the high scores list from local storage, renders change in DOM
 function handleClearScores(e) {
+    e.stopPropagation()
     if (e.target.id = "clear-button") {
         let ul = e.target.previousElementSibling
         localStorage.removeItem('highScores')
@@ -219,7 +249,6 @@ function handleClearScores(e) {
     }
 }
 
-$highScoresContainer.addEventListener('click', handleClearScores);
 
-renderHighScores(highscores);
+
 
