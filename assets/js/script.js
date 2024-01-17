@@ -247,9 +247,11 @@ function handleClearScores(e) {
         if (ul !== null) {
             ul.innerHTML = "nothing to see here"
         }
+        if (ul !== null) {
+            ul.innerHTML = "nothing to see here"
+        }
     }
 }
-
-
+playAgainBtn.addEventListener("click", resetGame);
 
 
