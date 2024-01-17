@@ -201,7 +201,7 @@ function renderHighScores(array) {
         $ul.innerHTML = "nothing to see here"
     }
     for (let i = 0; i < array.length; i++) {
-        if (i > 5) {
+        if (i > 3) {
             break;
         }
         $ul.innerHTML += `<li>${array[i].userName} : ${array[i].userScore} points</li> `
