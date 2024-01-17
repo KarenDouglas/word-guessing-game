@@ -101,7 +101,6 @@ header {
 .high-scores-container details,
 .hint-container details {
     text-align: center;
-    min-height: 50px;
 }
 .high-scores-container button{
     border: greenyellow solid 1px;
@@ -111,6 +110,7 @@ header {
     border-radius: 10px;
 }
 .high-scores-container button:hover{
+
  background-color: greenyellow;
  color: black;   
 }
@@ -258,6 +258,7 @@ footer ul {
     border: greenyellow 1px solid;
     border-top: none;
     border-radius: 0 0 30px 30px;
+  
 }
 
     #hint-score-container{
