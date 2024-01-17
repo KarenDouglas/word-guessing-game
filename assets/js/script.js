@@ -47,7 +47,9 @@ function makeGame(array) {
 //  or into the wrong guesses container if incorrect.
 //  It also runs the displayOutcome function either when the 
 //  word is completed, or the user's score is zero. 
-document.addEventListener("keyup", function (event) {
+
+
+function letterGuess(event) {
     let guess = event.key;
     let correctGuess = wordArray.includes(guess);
     // The first part of this conditional adds correct letters
@@ -84,7 +86,7 @@ document.addEventListener("keyup", function (event) {
     } else {
         return;
     }
-})
+}
 
 // We then call the first function, ensuring that 
 // it is rendered on page load.
@@ -209,40 +211,11 @@ function renderHighScores(array) {
 $(document).ready(function () {
     $('.modal').modal();
   });
-//
-  setTimeout(function(){
-$('.modal').modal('open')
-  },2000)
-
-  function displayOutcome() {
-    var userScore = 100; 
-    var initials = $("#initialsInput");
-    
-
-    if (userScore !== 0) {
-      // Displays congratulations message with input for initials
-      $("#modalHeader").text("Congratulations! You won!");
-      $("#actionBtn").text("Submit");
-      $("#actionBtn").on("click", function(){
-          localStorage.setItem($("#initialsInput").val(), "score");
-          $('.modal').modal('close');
-      });
-      $("#initialsInput").show();
-      $("#scoreDisplayBox").show(); // Show the score text
-  } else {
-      // Displays sorry message without input for initials, a close button, and hide high score
-      $("#modalHeader").text("Sorry, you lost");
-      $("#actionBtn").text("Close");
-      $("#actionBtn").on("click", function(){
-          $('.modal').modal('close');
-      });
-      $("#initialsInput").hide();
-      $("scoreDisplayBox").hide(); // Hide the high score text
-}};
 
 // This displays the modal's content,
 // which changes whether win or lose.
 function displayOutcome() {
+    document.removeEventListener("keyup", letterGuess);
     var initials = $("#initialsInput");
     var highScore = $();
     $('.modal').modal('open');
@@ -292,6 +265,6 @@ function handleClearScores(e) {
         }
     }
 }
+
+document.addEventListener("keyup", letterGuess);
 playAgainBtn.addEventListener("click", resetGame);
-
-
