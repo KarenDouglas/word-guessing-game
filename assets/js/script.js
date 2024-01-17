@@ -4,7 +4,6 @@ const hintContainer = document.getElementById('hint-container');
 const playAgainBtn = document.getElementById("play-again-button");
 const dictionaryLink = document.getElementById("dictionaryLink");
 const letters = Array.from("qwertyuiopasdfghjklzxcvbnm");
-const highscores = JSON.parse(localStorage.getItem('highScores')) || []
 let guessCont = document.getElementById("guessed-box-container");
 let scoreCont = document.getElementById("score-container");
 let iniInp = document.getElementById("initialsInput");
@@ -13,7 +12,6 @@ let wordArray = [];
 let gameWord = "";
 let userScore = 100;
 let wrongGuesses = [];
-
 // This function generates a random word from a database,
 // and saves that as an array to seperate the letters,
 // then runs the makeGame function with that array
@@ -58,6 +56,7 @@ document.addEventListener("keyup", function (event) {
         let correctSpot = document.querySelectorAll(`[data-letter=${guess}]`);
         for (i = 0; i < correctSpot.length; i++) {
             correctSpot[i].textContent = guess;
+            // styling for correct 
         }
         // This conditional adds an incorrect guess to the proper spot,
         // as well as deducting points from the user's score
@@ -160,30 +159,41 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // This function saves the user's name and score into local storage
 // It also sorts the high scores based on score
+let highScoresStorage = JSON.parse(localStorage.getItem('highScores')) || [];
+
+if (highScoresStorage === null || highScoresStorage === undefined) {
+    highScoresStorage = [];
+    console.log('No local storage yet');
+}
+
+console.log('ls', highScoresStorage);
+renderHighScores(highScoresStorage.sort((a, b) => b.userScore - a.userScore));
+renderHighScores(highScoresStorage)
 function addToHighScores(name, score) {
-    const scoreObj = {
+    const scoreOBJ = {
         userName: name,
         userScore: score
     }
-
-    highscores.push(scoreObj)
-    const sortedHighScores = highscores.sort((a, b) => b.userScore - a.userScore);
-    localStorage.setItem('highScores', JSON.stringify(sortedHighScores))
-    console.log(sortedHighScores)
-    renderHighScores(sortedHighScores)
+    highScoresStorage.push(scoreOBJ)
+    localStorage.setItem('highScores', JSON.stringify(highScoresStorage))
+    console.log('after set',localStorage.getItem('highScores'))
+    highScoresStorage = JSON.parse(localStorage.getItem('highScores')).sort((a, b) => b.userScore - a.userScore)
+    renderHighScores(highScoresStorage)
+    
 }
 // Renders the High Scores from Local Storage
 function renderHighScores(array) {
     $highScoresContainer.innerHTML =
-        `
+    `
     <details>
-        <summary >High Scores</summary> 
-        <ul id="high-score-ul"></ul>
-        <button id ="clear-button" >Clear Score</button>      
+    <summary >High Scores</summary> 
+    <ul id="high-score-ul"></ul>
+    <button id ="clear-button"  >Clear Score</button>      
     </details>
     `
+    $button = $highScoresContainer.querySelector('#clear-button')
     $ul = $highScoresContainer.querySelector('#high-score-ul')
-    if (!array.length) {
+    if (array.length ===0) {
         $ul.innerHTML = "nothing to see here"
     }
     for (let i = 0; i < array.length; i++) {
@@ -192,6 +202,7 @@ function renderHighScores(array) {
         }
         $ul.innerHTML += `<li>${array[i].userName} : ${array[i].userScore} points</li> `
     }
+    $button.addEventListener('click', handleClearScores);
 }
 
 //Modal 
@@ -269,17 +280,18 @@ function displayOutcome() {
 
 // Clears the high scores list from local storage, renders change in DOM
 function handleClearScores(e) {
+    e.stopPropagation()
     if (e.target.id = "clear-button") {
         let ul = e.target.previousElementSibling
         localStorage.removeItem('highScores')
         if (ul !== null) {
             ul.innerHTML = "nothing to see here"
         }
+        if (ul !== null) {
+            ul.innerHTML = "nothing to see here"
+        }
     }
 }
-
-$highScoresContainer.addEventListener('click', handleClearScores);
 playAgainBtn.addEventListener("click", resetGame);
 
-renderHighScores(highscores);
 

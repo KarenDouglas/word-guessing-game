@@ -1,4 +1,3 @@
-
 ### User Story: 
 ```
 As a gamer/ trivia lover , I want to play a word guessing game that tests my knowledge of dictionary words. So that I can test my knowledge.
