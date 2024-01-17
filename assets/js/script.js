@@ -159,6 +159,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // This function saves the user's name and score into local storage
 // It also sorts the high scores based on score
+let highScoresStorage = JSON.parse(localStorage.getItem('highScores')) || [];
+
+if (highScoresStorage === null || highScoresStorage === undefined) {
+    highScoresStorage = [];
+    console.log('No local storage yet');
+}
+
+console.log('ls', highScoresStorage);
+renderHighScores(highScoresStorage.sort((a, b) => b.userScore - a.userScore));
+renderHighScores(highScoresStorage)
 function addToHighScores(name, score) {
     const scoreOBJ = {
         userName: name,
@@ -183,7 +193,7 @@ function renderHighScores(array) {
     `
     $button = $highScoresContainer.querySelector('#clear-button')
     $ul = $highScoresContainer.querySelector('#high-score-ul')
-    if (!array.length) {
+    if (array.length ===0) {
         $ul.innerHTML = "nothing to see here"
     }
     for (let i = 0; i < array.length; i++) {
