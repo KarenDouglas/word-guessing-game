@@ -201,7 +201,7 @@ function renderHighScores(array) {
         $ul.innerHTML = "nothing to see here"
     }
     for (let i = 0; i < array.length; i++) {
-        if (i > 5) {
+        if (i > 3) {
             break;
         }
         $ul.innerHTML += `<li>${array[i].userName} : ${array[i].userScore} points</li> `
@@ -212,6 +212,36 @@ function renderHighScores(array) {
 //Modal 
 $(document).ready(function () {
     $('.modal').modal();
+  });
+//
+  setTimeout(function(){
+$('.modal').modal('open')
+  },2000)
+
+  function displayOutcome() {
+    var userScore = 100; 
+    var initials = $("#initialsInput");
+    
+
+    if (userScore !== 0) {
+      // Displays congratulations message with input for initials
+      $("#modalHeader").text("Congratulations! You won!");
+      $("#actionBtn").text("Submit");
+      $("#actionBtn").on("click", function(){
+          localStorage.setItem($("#initialsInput").val(), "score");
+          $('.modal').modal('close');
+      });
+      $("#initialsInput").show();
+      $("#scoreDisplayBox").show(); // Show the score text
+  } else {
+      // Displays sorry message without input for initials, a close button, and hide high score
+      $("#modalHeader").text("Sorry, you lost");
+      $("#actionBtn").text("Close");
+      $("#actionBtn").on("click", function(){
+          $('.modal').modal('close');
+      });
+      $("#initialsInput").hide();
+      $("scoreDisplayBox").hide(); // Hide the high score text
 });
 
 // This displays the modal's content,
@@ -262,9 +292,7 @@ function handleClearScores(e) {
         if (ul !== null) {
             ul.innerHTML = "nothing to see here"
         }
-        if (ul !== null) {
-            ul.innerHTML = "nothing to see here"
-        }
+
     }
 }
 

@@ -12,6 +12,9 @@ body{
 }
 h1,p,a summary,details,section{
     color: greenyellow;
+    font-family: "Press Start 2P", system-ui;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .game-board-container span{
@@ -37,7 +40,6 @@ main {
 #main-container{
     max-width: 450px;
 }
-
 h1 {
     font-size: 24px;
 
@@ -101,7 +103,6 @@ header {
 .high-scores-container details,
 .hint-container details {
     text-align: center;
-    min-height: 50px;
 }
 .high-scores-container button{
     border: greenyellow solid 1px;
@@ -111,6 +112,7 @@ header {
     border-radius: 10px;
 }
 .high-scores-container button:hover{
+
  background-color: greenyellow;
  color: black;   
 }
@@ -215,8 +217,7 @@ footer ul {
         width: 30%;
         height: 700px;
         padding: 30px 40px;
-        animation: fadeIn 2s ease-in-out; /* Animations */
-
+        animation: fadeIn 2s ease-in-out; /* Animations */       
     }
 
     .hint-container {
@@ -258,6 +259,7 @@ footer ul {
     border: greenyellow 1px solid;
     border-top: none;
     border-radius: 0 0 30px 30px;
+  
 }
 
     #hint-score-container{
@@ -278,6 +280,10 @@ footer ul {
         justify-content: space-around;
         width: 80%;
     }
+<<<<<<< HEAD
+}
+
+=======
     /* Game Board Container styles for large screens */
     .game-board-container span{
         display: inline-block;
@@ -286,34 +292,3 @@ footer ul {
         margin: 0 10px;
     }
 }
-/* for the animations*/
-@keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  
-  @keyframes slideIn {
-    from {
-      transform: translateY(-20px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-  @keyframes floatAnimation {
-    0% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
