@@ -60,7 +60,7 @@ h1 {
 /* order of containers */
 .header-container {
     order: 0;
-    border: greenyellow solid 1px;
+    border: #adff2f solid 1px;
   
 }
 
@@ -134,7 +134,7 @@ header {
 }
 
 .game-board-container {
-    animation: fadeIn 2s ease-in-out; /* Animations */
+    animation: fadeIn 2s ease-in-out; /* Animated */
     margin: 40px 0 20px 0;
     min-height: 50%;
 }
@@ -145,7 +145,7 @@ header {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    animation: fadeIn 2s ease-in-out; /* Animations */
+    animation: fadeIn 2s ease-in-out; /* Animated */
 }
 
 .guessed-box-container span{
@@ -160,7 +160,7 @@ header {
 #score-container {
     height: 100px;
     border: greenyellow solid 1px;
-    animation: fadeIn 2s ease-in-out; /* Animations */
+    animation: fadeIn 2s ease-in-out; /* Animated */
 }
 
 /* footer layout */
@@ -224,7 +224,7 @@ footer ul {
         width: 30%;
         height: 700px;
         padding: 30px 40px;
-        animation: fadeIn 2s ease-in-out; /* Animations */
+        animation: fadeIn 2s ease-in-out; /* Animated */
 
     }
 
@@ -288,18 +288,46 @@ footer ul {
         justify-content: space-around;
         width: 80%;
     }
-<<<<<<< HEAD
-}
-
-=======
     /* Game Board Container styles for large screens */
     .game-board-container span{
         display: inline-block;
         border-bottom: greenyellow solid 1px;
         width: 45px;
         margin: 0 10px;
+    }}
+    /* for the animations*/
+@keyframes fadeIn {
+    from {
+      opacity: 0;
     }
-}
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  @keyframes floatAnimation {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  
+
 
 
 
