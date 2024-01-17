@@ -4,9 +4,11 @@ main {
     flex-direction: column;
     width: 100%;
 }
-#main-container{
+
+#main-container {
     max-width: 350px;
 }
+
 h1 {
     font-size: 24px;
 
@@ -16,7 +18,7 @@ h1 {
 .header-container {
     order: 0;
     border: black solid 1px;
-  
+
 }
 
 .rules-container {
@@ -41,13 +43,15 @@ h1 {
 
 /*  Header Layout*/
 header {
-    
+
     text-align: center;
 }
+
 /* layout/styles for the Summary tags */
 summary {
     list-style: none;
 }
+
 .rules-container,
 .high-scores-container,
 .hint-container {
@@ -83,8 +87,9 @@ summary {
     height: 100px;
     border: black solid 1px;
 }
+
 /* footer layout */
-footer{
+footer {
     margin: 0 auto;
     max-width: 350px;
     display: flex;
@@ -92,24 +97,29 @@ footer{
     justify-content: center;
     border: black solid 1px;
 }
-footer p{
+
+footer p {
     height: fit-content;
     margin: 0;
     text-align: center;
 
 }
-footer ul{
+
+footer ul {
     text-align: center;
 }
+
 /*  large Container Styles */
 @media screen and (min-width: 600px) {
+
     /* main container styles for large  screens */
     main {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
     }
-    #main-container{
+
+    #main-container {
         max-width: 1200px;
     }
 
@@ -118,13 +128,15 @@ footer ul{
         width: 30%;
         height: 100px;
     }
-/* header styles for large screens */
+
+    /* header styles for large screens */
     .header-container {
         order: 1;
         width: 40%;
         height: 200px;
         border: none;
     }
+
     h1 {
         font-size: 30x;
         margin: 18%;
@@ -132,8 +144,8 @@ footer ul{
 
     #high-scores-container {
         order: 2;
-        width: 30%;  
-        height: 100px;  
+        width: 30%;
+        height: 100px;
     }
 
     #hint-score-container {
@@ -141,7 +153,7 @@ footer ul{
         width: 30%;
         height: 700px;
         padding: 30px 40px;
-        
+
     }
 
     .hint-container {
@@ -154,8 +166,9 @@ footer ul{
         height: 700px;
         padding: 0 3%;
     }
+
     /* Footer Layout  for large screens*/
-    footer{
+    footer {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
@@ -163,9 +176,11 @@ footer ul{
         max-width: 1200px;
         align-items: center;
     }
-    footer ul{
+
+    footer ul {
         display: flex;
         justify-content: space-around;
         width: 80%;
     }
 }
+
