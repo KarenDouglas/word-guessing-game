@@ -49,7 +49,7 @@ function makeGame(array) {
 //  word is completed, or the user's score is zero. 
 
 
-document.addEventListener("keyup", function (event) {
+function letterGuess(event) {
     let guess = event.key;
     let correctGuess = wordArray.includes(guess);
     // The first part of this conditional adds correct letters
@@ -86,9 +86,7 @@ document.addEventListener("keyup", function (event) {
     } else {
         return;
     }
-})
-
-
+}
 
 // We then call the first function, ensuring that 
 // it is rendered on page load.
@@ -242,12 +240,12 @@ $('.modal').modal('open')
       });
       $("#initialsInput").hide();
       $("scoreDisplayBox").hide(); // Hide the high score text
-});
+}};
 
 // This displays the modal's content,
 // which changes whether win or lose.
 function displayOutcome() {
-    document.removeEventListener("keyup");
+    document.removeEventListener("keyup", letterGuess);
     var initials = $("#initialsInput");
     var highScore = $();
     $('.modal').modal('open');
@@ -296,6 +294,5 @@ function handleClearScores(e) {
     }
 }
 
-
+document.addEventListener("keyup", letterGuess);
 playAgainBtn.addEventListener("click", resetGame);
-
