@@ -102,14 +102,7 @@ Contributers git-hub pages:
 # Enjoy playing GUESS AWAY!
 
 ### Deployment link
-
-
-
-
-
-
-
-
-
+KarenDouglas.github.io/word-guessing-game
+![karendouglas github io_word-guessing-game_](https://github.com/KarenDouglas/word-guessing-game/assets/153332797/11880459-60ea-44a5-baed-428ed89975ea)
 
 
