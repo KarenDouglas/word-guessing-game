@@ -1,30 +1,23 @@
-### User Story: 
-```
-As a gamer/ trivia lover , I want to play a word guessing game that tests my knowledge of dictionary words. So that I can test my knowledge.
-```
 
-### Acceptance Criteria:
-```
-Given I want to take a dictionary quiz game
-When I go to a page 
-Then I am presented with  a board with 5 to 7 spaces, and an input to select a letter, 50 points
-When I guess a correct letter
-Then the space is filled in the word, the points remain the same
-When I guess a wrong letter
-Then the letter is placed in a wrong guess box, points will be deducted
-When I guess the word correctly
-Then  I am present with the option to play again or learn more about the word, my score is recorded
-When I run out of points 
-Then  I am present with the option to play again or learn more about the word, my score is recorded
-When I click play again
-Then I am presented with the starting board
-When I click learn more
-Then I am presented with a definition and more info on the word
-When I click on High Scores
-Then I am presented with a display of previous scores
-```
 # Guess Away
 Welcome to Guess Away! This game is a great way for players to test their knowledge or learn some new words as they play and have fun!
+
+
+## Live Site
+[View the Live Site](https://karendouglas.github.io/word-guessing-game/)
+![screencapture-karendouglas-github-io-word-guessing-game-2024-03-20-14_54_55](https://github.com/KarenDouglas/word-guessing-game/assets/79128405/b3d50b18-17bc-4a05-846a-d2a5fb4432ab)
+
+# Description
+Welcome to our Word Guess Game repository! This project offers users an engaging and challenging experience where they can test their word-guessing skills. Players have 10 attempts to guess the correct word by typing in letters, with the help of hints provided by the Dictionary API. The game generates a random word for players to guess, ensuring each round is unique and exciting. Built with JavaScript, HTML, and CSS, this app provides a seamless and interactive interface for users to enjoy. Whether you're looking to sharpen your vocabulary or simply have some fun, this Word Guess Game is the perfect choice. Join us in exploring the world of words and enjoy hours of entertainment
+
+
+
+## Built With
+- JavaScript
+- HTML5
+- CSS
+- Dictionary API
+- Random Word API
 
 ### Project 
 In this project we were tasked with implementing our knowledge from this course, we decided, to build an game called "Guess Away". We did a lot of brainstorming to come with an idea where we could implement the API's, different functionality, and a great immersive user experience.This game is a simple game where users try to guess a randomly selected word, with an hint available to whom need it, and a high scores section for the competitive players. The game includes features such as a dynamic game board, user input handling, hints, a high scores list, and a modal for game outcomes.
